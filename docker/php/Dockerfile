@@ -4,6 +4,13 @@ FROM php:8.1.18-fpm
 # コンテナ内の/usr/local/etc/php/ディレクトリにコピー
 COPY php.ini /usr/local/etc/php/
 
+  # composer environment
+ENV  COMPOSER_ALLOW_SUPERUSER=1 \
+  COMPOSER_HOME=/composer
+
+# composer
+COPY --from=composer:2.6.5 /usr/bin/composer /usr/bin/composer
+
 # パッケージやPHPの拡張モジュールをインストールするコマンド　を実行
 RUN apt-get update && apt-get install -y \
 	git \
